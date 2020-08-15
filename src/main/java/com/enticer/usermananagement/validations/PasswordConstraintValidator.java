@@ -19,6 +19,9 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
+        if (messageSource == null) {
+          throw new IllegalStateException("DBMessageSource has not been wired");
+        }
         MessageResolver messageResolver = new SpringMessageResolver(messageSource);
         PasswordValidator validator = new PasswordValidator(messageResolver, Arrays.asList(
                 // at least 6 characters
