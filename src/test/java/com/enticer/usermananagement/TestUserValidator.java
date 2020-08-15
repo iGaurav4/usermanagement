@@ -4,6 +4,7 @@ import com.enticer.usermananagement.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
@@ -21,14 +22,8 @@ import java.util.Set;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = TestNGWithSpringApplication.class)
 public class TestUserValidator extends AbstractTransactionalTestNGSpringContextTests {
 
-    private static ValidatorFactory validatorFactory;
+    @Autowired
     private static Validator validator;
-
-    @BeforeClass
-    public static void createValidator() {
-        validatorFactory = Validation.buildDefaultValidatorFactory();
-        validator = (Validator) validatorFactory.getValidator();
-    }
 
     @Test(description = "Test to validate User input")
     public void testUserValidator() {
@@ -49,10 +44,5 @@ public class TestUserValidator extends AbstractTransactionalTestNGSpringContextT
         } finally {
             log.debug("testUserValidator executed");
         }
-    }
-
-    @AfterClass
-    public static void close() {
-        validatorFactory.close();
     }
 }
